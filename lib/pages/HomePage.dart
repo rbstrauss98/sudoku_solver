@@ -12,7 +12,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: const Center(
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(24.0), // Set the desired padding value
           child: SudokuGrid(),
