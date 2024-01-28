@@ -1,5 +1,4 @@
 import 'cell.dart';
-
 class Sudoku {
   List<List<Cell>> cells = List.generate(9, (i) => List.generate(9, (j) => Cell()));
 
@@ -36,7 +35,7 @@ class Sudoku {
     return true;
   }
 
-  void inputPuzzle(List<int> puzzleList) {
+  bool inputPuzzle(List<int> puzzleList) {
     int r = 0;
     int c = 0;
     for (int v in puzzleList) {
@@ -52,17 +51,18 @@ class Sudoku {
     for (int r = 0; r < 9; r++) {
       for (int c = 0; c < 9;c++) {
         if (cells[r][c].value != null) {
-          bool success = forwardCheckRemove(r, c, cells[r][c].value!);
+          bool success = forwardCheckRemove(r, c, cells[r][c].value!, isInitial: true);
           if (!success) {
             print('Contradiction in Puzzle! Invalid input. Exiting');
-            return;
+            return false;
           }
         }
       }
     }
+    return true;
   }
 
-  bool forwardCheckRemove(int row, int col, int value){
+  bool forwardCheckRemove(int row, int col, int value, {bool isInitial = false}){
     int grid = getGridCell(row, col)[0];
     List<int> gridRows = [];
     List<int> gridColumns = [];
@@ -92,11 +92,17 @@ class Sudoku {
               return false;
             }
           }
+          else if (isInitial && !(i == row && j == col) && cells[i][j].value == value) {
+            return false;
+          }
         } else if (gridRows.contains(i) && gridColumns.contains(j)) {
           if (cells[i][j].value == null) {
             if (!cells[i][j].removeValue(value)) {
               return false;
             }
+          }
+          else if (isInitial && !(i == row && j == col) && cells[i][j].value == value) {
+            return false;
           }
         }
       }

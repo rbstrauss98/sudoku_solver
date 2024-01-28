@@ -11,7 +11,7 @@ class Solver {
         min = cellDomains.length;
         mrvList = [cell];
       }
-      if (cellDomains.length == min) {
+      else if (cellDomains.length == min) {
         mrvList.add(cell);
       }
     }
@@ -23,13 +23,14 @@ class Solver {
     List<List<int>> maxDegreeList = [];
     for (List<int> cell in tied) {
       int cur = countConstraints(puzzle, cell[0], cell[1]);
-      if (cur == max) {
-        maxDegreeList.add(cell);
-      }
       if (cur > max) {
         max = cur;
         maxDegreeList = [cell];
       }
+      else if (cur == max) {
+        maxDegreeList.add(cell);
+      }
+      
     }
     return maxDegreeList;
   }
@@ -136,7 +137,10 @@ class Solver {
 
   Sudoku? solve(List<int> puzzleValues) {
     Sudoku puzzle = Sudoku();
-    puzzle.inputPuzzle(puzzleValues);
+    bool validInput = puzzle.inputPuzzle(puzzleValues);
+    if (!validInput) {
+      return null;
+    }
     Sudoku? solvedPuzzle = backtrackingSearch(puzzle);
     if (solvedPuzzle != null) {
       return solvedPuzzle;
