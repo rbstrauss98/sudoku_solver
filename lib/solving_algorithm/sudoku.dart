@@ -53,7 +53,6 @@ class Sudoku {
         if (cells[r][c].value != null) {
           bool success = forwardCheckRemove(r, c, cells[r][c].value!, isInitial: true);
           if (!success) {
-            print('Contradiction in Puzzle! Invalid input. Exiting');
             return false;
           }
         }

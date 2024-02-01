@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sudoku Solver',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor:Color.fromARGB(255, 14, 117, 55)),
+        colorScheme: ColorScheme.fromSeed(seedColor:Colors.green.shade700),
       ),
       home: const MyHomePage(title: 'Sudoku Solver'),
     );

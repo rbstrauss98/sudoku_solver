@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 import 'package:sudoku_solver/solving_algorithm/solver.dart';
 import 'package:sudoku_solver/number_picker.dart'; // Replace with your actual package name
 
@@ -13,19 +14,23 @@ class SudokuGrid extends StatefulWidget {
 
 class _SudokuGridState extends State<SudokuGrid> {
   List<int> gridValues = List<int>.generate(81, (index) => 0);
-  List<bool> inputValues = List<bool>.generate(81, (index) => false);
+  List<bool> ifInputValues = List<bool>.generate(81, (index) => false);
+  List<int> initialValues = List<int>.generate(81, (index) => 0); 
+  String buttonText = 'Solve Puzzle'; 
   Solver solver = Solver(); // Create an instance of the SudokuSolver class
 
   void solvePuzzle() {
-    inputValues = gridValues.map((e) => e != 0).toList();
-    Sudoku? success = solver.solve(gridValues);
-    if (success != null) {
+    ifInputValues = gridValues.map((e) => e != 0).toList();
+    Tuple2<Sudoku?, String> success = solver.solve(gridValues);
+    if (success.item1 != null) {
+      Sudoku sudoku = success.item1!; 
       setState(() {
         for (int i = 0; i < 9; i++) {
           for (int j = 0; j < 9; j++) {
-            gridValues[i * 9 + j] = success.cells[i][j].value!;
+            gridValues[i * 9 + j] = sudoku.cells[i][j].value!;
           }
         }
+        buttonText = 'Back to input'; 
       });
     } else {
       // clearBoard();
@@ -33,11 +38,11 @@ class _SudokuGridState extends State<SudokuGrid> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Solving Failed'),
-            content: Text('The puzzle could not be solved. Please try again.'),
+            title: const Text('Solving Failed'),
+            content: Text(success.item2),
             actions: <Widget>[
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -49,12 +54,21 @@ class _SudokuGridState extends State<SudokuGrid> {
     }
   }
 
+  void showInitialValues() {
+    setState(() {
+      gridValues = List.from(initialValues); // Update gridValues with solutionValues
+      buttonText = 'Solve Puzzle'; // Reset the button text
+    });
+  }
+
   void clearBoard() {
     setState(() {
       for (int i = 0; i < gridValues.length; i++) {
         gridValues[i] = 0;
-        inputValues[i] = false;
+        ifInputValues[i] = false;
+        initialValues[i] = 0;
       }
+      buttonText = 'Solve Puzzle'; // Reset the button text
     });
 
   }
@@ -82,7 +96,8 @@ class _SudokuGridState extends State<SudokuGrid> {
                   if (selectedNumber != null) {
                     setState(() {
                       gridValues[index] = selectedNumber;
-                      inputValues[index] = true;
+                      ifInputValues[index] = true;
+                      initialValues[index] = selectedNumber; 
                     });
                   }
                 },
@@ -124,7 +139,7 @@ class _SudokuGridState extends State<SudokuGrid> {
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                           color:
-                              inputValues[index] ? Colors.black : Colors.green[600]),
+                              ifInputValues[index] ? Colors.black : Colors.green[700]),
                     ),
                   ),
                 ),
@@ -135,14 +150,22 @@ class _SudokuGridState extends State<SudokuGrid> {
             physics: const NeverScrollableScrollPhysics()),
       ),
       ElevatedButton(
-        onPressed: solvePuzzle,
-        child: const Text('Solve Puzzle'),
+        onPressed: buttonText == 'Solve Puzzle' ? solvePuzzle : showInitialValues, 
+        style: ElevatedButton.styleFrom(
+          backgroundColor: buttonText == 'Solve Puzzle' ? Colors.green[700] : Colors.green[100], 
+          foregroundColor: buttonText == 'Solve Puzzle' ? Colors.white : Colors.green[700],
+        ),
+        child: Text(buttonText),
       ),
       const SizedBox(height: 20),
       ElevatedButton(
         onPressed:
             clearBoard, // Call the clearBoard method when the button is pressed
-        child: const Text('Clear Board'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor:  Colors.green[700],
+          foregroundColor:  Colors.white,
+        ),
+        child: const Text('Clear Board')
       ),
     ]);
   }

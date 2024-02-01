@@ -135,19 +135,18 @@ class Solver {
     return null;
   }
 
-  Sudoku? solve(List<int> puzzleValues) {
+  Tuple2<Sudoku?, String> solve(List<int> puzzleValues) {
     Sudoku puzzle = Sudoku();
     bool validInput = puzzle.inputPuzzle(puzzleValues);
     if (!validInput) {
-      return null;
+      return const Tuple2<Sudoku?, String>(null, "The puzzle could not be solved because of an Invalid Input. Please try again.");
     }
     Sudoku? solvedPuzzle = backtrackingSearch(puzzle);
     if (solvedPuzzle != null) {
-      return solvedPuzzle;
+      return Tuple2<Sudoku?, String>(solvedPuzzle, "Solved");
     }
     else{
-      return null;
+      return const Tuple2<Sudoku?, String>(null, "The puzzle could not be solved because it has no solution. Please try again.");
     }
-    
   }
 }
