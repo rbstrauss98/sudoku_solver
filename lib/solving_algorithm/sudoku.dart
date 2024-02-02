@@ -78,14 +78,14 @@ class Sudoku {
     }
     int gridRow = 3 * (row ~/ 3);
     int gridColumn = 3 * (col ~/ 3);
-    for (int gr = gridRow; gr < gridRow + 3; gr++) {
-      for (int gc = gridColumn; gc < gridColumn + 3; gc++) {
-        if (cells[gr][gc].value == null) {
-          if (!cells[gr][gc].removeValue(value)) {
+    for (int i = gridRow; i < gridRow + 3; i++) {
+      for (int j = gridColumn; j < gridColumn + 3; j++) {
+        if (cells[i][j].value == null) {
+          if (!cells[i][j].removeValue(value)) {
             return false;
           }
         }
-        else if (isInitial && !(gr == row && gc == col) && cells[gr][gc].value == value) {
+        else if (isInitial && !(i == row && j == col) && cells[i][j].value == value) {
           return false;
         }
       }
