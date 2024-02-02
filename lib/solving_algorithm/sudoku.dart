@@ -62,27 +62,6 @@ class Sudoku {
   }
 
   bool forwardCheckRemove(int row, int col, int value, {bool isInitial = false}){
-    int grid = getGridCell(row, col)[0];
-    List<int> gridRows = [];
-    List<int> gridColumns = [];
-    if (grid == 0 || grid == 1 || grid == 2) {
-      gridRows = [0, 1, 2];
-    }
-    if (grid == 3 || grid == 4 || grid == 5) {
-      gridRows = [3, 4, 5];
-    }
-    if (grid == 6 || grid == 7 || grid == 8) {
-      gridRows = [6, 7, 8];
-    }
-    if (grid == 0 || grid == 3 || grid == 6) {
-      gridColumns = [0, 1, 2];
-    }
-    if (grid == 1 || grid == 4 || grid == 7) {
-      gridColumns = [3, 4, 5];
-    }
-    if (grid == 2 || grid == 5 || grid == 8) {
-      gridColumns = [6, 7, 8];
-    }
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9;j++) {
         if (i == row || j == col) {
@@ -94,15 +73,20 @@ class Sudoku {
           else if (isInitial && !(i == row && j == col) && cells[i][j].value == value) {
             return false;
           }
-        } else if (gridRows.contains(i) && gridColumns.contains(j)) {
-          if (cells[i][j].value == null) {
-            if (!cells[i][j].removeValue(value)) {
-              return false;
-            }
-          }
-          else if (isInitial && !(i == row && j == col) && cells[i][j].value == value) {
+        } 
+      }
+    }
+    int gridRow = 3 * (row ~/ 3);
+    int gridColumn = 3 * (col ~/ 3);
+    for (int gr = gridRow; gr < gridRow + 3; gr++) {
+      for (int gc = gridColumn; gc < gridColumn + 3; gc++) {
+        if (cells[gr][gc].value == null) {
+          if (!cells[gr][gc].removeValue(value)) {
             return false;
           }
+        }
+        else if (isInitial && !(gr == row && gc == col) && cells[gr][gc].value == value) {
+          return false;
         }
       }
     }
@@ -110,27 +94,6 @@ class Sudoku {
   }
 
   int forwardCheckCount(int row, int col, int value){
-    int grid = getGridCell(row, col)[0];
-    List<int> gridRows = [];
-    List<int> gridColumns = [];
-    if (grid == 0 || grid == 1 || grid == 2) {
-      gridRows = [0, 1, 2];
-    }
-    if (grid == 3 || grid == 4 || grid == 5) {
-      gridRows = [3, 4, 5];
-    }
-    if (grid == 6 || grid == 7 || grid == 8) {
-      gridRows = [6, 7, 8];
-    }
-    if (grid == 0 || grid == 3 || grid == 6) {
-      gridColumns = [0, 1, 2];
-    }
-    if (grid == 1 || grid == 4 || grid == 7) {
-      gridColumns = [3, 4, 5];
-    }
-    if (grid == 2 || grid == 5 || grid == 8) {
-      gridColumns = [6, 7, 8];
-    }
     int count = 0;
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
@@ -140,11 +103,16 @@ class Sudoku {
               count += 1;
             }
           }
-        } else if (gridRows.contains(i) && gridColumns.contains(j)) {
-          if (cells[i][j].value == null) {
-            if (cells[i][j].domain.contains(value)) {
-              count += 1;
-            }
+        }
+      }
+    }
+    int gridRow = 3 * (row ~/ 3);
+    int gridColumn = 3 * (col ~/ 3);
+    for (int i = gridRow; i < gridRow + 3; i++) {
+      for (int j = gridColumn; j < gridColumn + 3; j++) {
+        if (cells[i][j].value == null) {
+          if (cells[i][j].domain.contains(value)) {
+            count += 1;
           }
         }
       }

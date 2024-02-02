@@ -6,6 +6,7 @@ class Cell{
     domain = [value];
     this.value = value;
   }
+  
   void setDomain(List<int> domain) {
     this.domain = List<int>.from(domain);
     value = null;

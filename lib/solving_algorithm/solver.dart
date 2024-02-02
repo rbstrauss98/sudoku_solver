@@ -37,38 +37,21 @@ class Solver {
 
   int countConstraints(Sudoku puzzle, int row, int column) {
     int count = 0;
-    List<int> gridCell = puzzle.getGridCell(row, column);
-    int grid = gridCell[0];
-    List<int> gridRows = [];
-    List<int> gridColumns = [];
-    if (grid == 0 || grid == 1 || grid == 2) {
-      gridRows = [0, 1, 2];
-    }
-    if (grid == 3 || grid == 4 || grid == 5) {
-      gridRows = [3, 4, 5];
-    }
-    if (grid == 6 || grid == 7 || grid == 8) {
-      gridRows = [6, 7, 8];
-    }
-    if (grid == 0 || grid == 3 || grid == 6) {
-      gridColumns = [0, 1, 2];
-    }
-    if (grid == 1 || grid == 4 || grid == 7) {
-      gridColumns = [3, 4, 5];
-    }
-    if (grid == 2 || grid == 5 || grid == 8) {
-      gridColumns = [6, 7, 8];
-    }
     for (int r = 0; r < 9; r++) {
       for (int c = 0; c < 9; c++) {
         if (r == row || c == column) {
           if (puzzle.cells[r][c].value == null && !(r == row && c == column)) {
             count++;
           }
-        } else if (gridRows.contains(r) && gridColumns.contains(c)) {
-          if (puzzle.cells[r][c].value == null) {
-            count++;
-          }
+        } 
+      }
+    }
+    int gridRow = 3 * (row ~/ 3);
+    int gridColumn = 3 * (column ~/ 3);
+    for (int r = gridRow; r < gridRow + 3; r++) {
+      for (int c = gridColumn; c < gridColumn + 3; c++) {
+        if (puzzle.cells[r][c].value == null && !(r == row && c == column)){
+          count++;
         }
       }
     }
