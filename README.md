@@ -4,7 +4,7 @@ This is a simple sudoku solver app using a backtracking search that solves a puz
 
 In an iteration of the backtracking search, a variable is selected using the Minimum Remaining Values heuristic. In cases of a tie, the Maximum Degree heuristic was used. If there continues to be a tie the smallest number would be chosen. After the variable is chosen, its domain would be ordered using the Least-Constraining Value heuristic. The algorithm then will attempt to assign the first value in the variable's domain into the variable, and a copy of the original puzzle is created, but including the most recent variable's assignment. If this succeeds, backtracking is recursively called again with the new puzzle until the puzzle is solved. If an assignment of a value does not succeed, it will then in order try to assign the values from its domain until there it succeeds. If it exhausts all its options the backtracking search will retun null, and the process goes back. At the end of the recursion, if no solution is found, an error message will pop up.
 
-![IMG_3096](https://github.com/rbstrauss98/sudoku_solver/assets/86329701/af12fd16-be8a-4dac-9c0f-2d42a619a913)
+<img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/af12fd16-be8a-4dac-9c0f-2d42a619a913" width=250 height=600>
 
 ![IMG_3097](https://github.com/rbstrauss98/sudoku_solver/assets/86329701/35dd330b-d87e-4e29-89ee-4b984c8a8bfb)
 
