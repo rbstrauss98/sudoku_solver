@@ -139,14 +139,14 @@ class Solver {
     Sudoku puzzle = Sudoku();
     bool validInput = puzzle.inputPuzzle(puzzleValues);
     if (!validInput) {
-      return const Tuple2<Sudoku?, String>(null, "The puzzle could not be solved because of an Invalid Input. Please try again.");
+      return const Tuple2<Sudoku?, String>(null, "This is an invalid Input. Please try again.");
     }
     Sudoku? solvedPuzzle = backtrackingSearch(puzzle);
     if (solvedPuzzle != null) {
       return Tuple2<Sudoku?, String>(solvedPuzzle, "Solved");
     }
     else{
-      return const Tuple2<Sudoku?, String>(null, "The puzzle could not be solved because it has no solution. Please try again.");
+      return const Tuple2<Sudoku?, String>(null, "Puzzle has no solution. Please try again.");
     }
   }
 }

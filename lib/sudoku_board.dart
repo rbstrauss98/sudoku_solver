@@ -15,22 +15,22 @@ class SudokuGrid extends StatefulWidget {
 class _SudokuGridState extends State<SudokuGrid> {
   List<int> gridValues = List<int>.generate(81, (index) => 0);
   List<bool> ifInputValues = List<bool>.generate(81, (index) => false);
-  List<int> initialValues = List<int>.generate(81, (index) => 0); 
-  String buttonText = 'Solve Puzzle'; 
+  List<int> initialValues = List<int>.generate(81, (index) => 0);
+  String buttonText = 'Solve Puzzle';
   Solver solver = Solver(); // Create an instance of the SudokuSolver class
 
   void solvePuzzle() {
     ifInputValues = gridValues.map((e) => e != 0).toList();
     Tuple2<Sudoku?, String> success = solver.solve(gridValues);
     if (success.item1 != null) {
-      Sudoku sudoku = success.item1!; 
+      Sudoku sudoku = success.item1!;
       setState(() {
         for (int i = 0; i < 9; i++) {
           for (int j = 0; j < 9; j++) {
             gridValues[i * 9 + j] = sudoku.cells[i][j].value!;
           }
         }
-        buttonText = 'Back to input'; 
+        buttonText = 'Back to input';
       });
     } else {
       // clearBoard();
@@ -56,7 +56,8 @@ class _SudokuGridState extends State<SudokuGrid> {
 
   void showInitialValues() {
     setState(() {
-      gridValues = List.from(initialValues); // Update gridValues with solutionValues
+      gridValues =
+          List.from(initialValues); // Update gridValues with solutionValues
       buttonText = 'Solve Puzzle'; // Reset the button text
     });
   }
@@ -70,7 +71,6 @@ class _SudokuGridState extends State<SudokuGrid> {
       }
       buttonText = 'Solve Puzzle'; // Reset the button text
     });
-
   }
 
   @override
@@ -91,18 +91,19 @@ class _SudokuGridState extends State<SudokuGrid> {
               bool isThirdOrSixthColumn = index % 9 % 3 ==
                   2; // Check if it's the end of the third or sixth column
               return InkWell(
-                onTap: () async {
+                onTap: buttonText == 'Solve Puzzle' ? () async {
                   int? selectedNumber = await showNumberPicker(context);
                   if (selectedNumber != null) {
                     setState(() {
                       gridValues[index] = selectedNumber;
                       ifInputValues[index] = true;
-                      initialValues[index] = selectedNumber; 
+                      initialValues[index] = selectedNumber;
                     });
                   }
-                },
+                } : null,
                 child: Container(
                   decoration: BoxDecoration(
+                    // color: ifInputValues[index] ? Colors.white : Colors.green[100], 
                     border: Border(
                       top: BorderSide(
                         color: Colors.black,
@@ -138,8 +139,9 @@ class _SudokuGridState extends State<SudokuGrid> {
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          color:
-                              ifInputValues[index] ? Colors.black : Colors.green[700]),
+                          color: ifInputValues[index]
+                              ? Colors.black
+                              : Colors.green[500]),
                     ),
                   ),
                 ),
@@ -149,23 +151,60 @@ class _SudokuGridState extends State<SudokuGrid> {
                 true, // This makes the GridView.builder take only as much space as it needs
             physics: const NeverScrollableScrollPhysics()),
       ),
-      ElevatedButton(
-        onPressed: buttonText == 'Solve Puzzle' ? solvePuzzle : showInitialValues, 
-        style: ElevatedButton.styleFrom(
-          backgroundColor: buttonText == 'Solve Puzzle' ? Colors.green[700] : Colors.green[100], 
-          foregroundColor: buttonText == 'Solve Puzzle' ? Colors.white : Colors.green[700],
+      const SizedBox(height: 20),
+      SizedBox(
+        width: 250.0,
+        child: ElevatedButton(
+          onPressed:
+              buttonText == 'Solve Puzzle' ? solvePuzzle : showInitialValues,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: buttonText == 'Solve Puzzle'
+                ? Theme.of(context).colorScheme.primary
+                : Colors.green[100],
+            foregroundColor:
+                buttonText == 'Solve Puzzle' ? Colors.white : Theme.of(context).colorScheme.primary,
+          ),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: buttonText == "Solve Puzzle"
+                      ? buttonText
+                      : "$buttonText  ",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: buttonText == 'Solve Puzzle'
+                        ? Colors.white
+                        : Theme.of(context).colorScheme.primary,
+                  ), 
+                ),
+                if (buttonText != 'Solve Puzzle') // Only render the WidgetSpan if buttonText is 'Solve Puzzle'
+                  const WidgetSpan(
+                    child: Icon(Icons.undo, size: 16), 
+                  ),
+              ],
+            ),
+          ),
         ),
-        child: Text(buttonText),
       ),
       const SizedBox(height: 20),
-      ElevatedButton(
-        onPressed:
-            clearBoard, // Call the clearBoard method when the button is pressed
-        style: ElevatedButton.styleFrom(
-          backgroundColor:  Colors.green[700],
-          foregroundColor:  Colors.white,
+      SizedBox(
+        width: 250.0,
+        child: ElevatedButton(
+          onPressed: clearBoard,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Colors.white,
+          ),
+          child: const Text(
+            'Clear Board',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        child: const Text('Clear Board')
       ),
     ]);
   }

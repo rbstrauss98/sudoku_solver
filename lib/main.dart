@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sudoku Solver',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor:Colors.green.shade700),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(0, 0, 89, 69),
+        ),
       ),
       home: const MyHomePage(title: 'Sudoku Solver'),
     );
   }
 }
-
-
