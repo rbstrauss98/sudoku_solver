@@ -6,9 +6,9 @@ In an iteration of the backtracking search, a variable is selected using the Min
 
 <img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/af12fd16-be8a-4dac-9c0f-2d42a619a913" width=250 height=600>
 
-![IMG_3097](https://github.com/rbstrauss98/sudoku_solver/assets/86329701/35dd330b-d87e-4e29-89ee-4b984c8a8bfb)
+<img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/35dd330b-d87e-4e29-89ee-4b984c8a8bfb" width=250 height=600>
 
-![IMG_3098](https://github.com/rbstrauss98/sudoku_solver/assets/86329701/1fb58f58-0387-40d6-9dc3-2d0dcc22a63a)
+<img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/1fb58f58-0387-40d6-9dc3-2d0dcc22a63a" width=250 height=600>
 
-![IMG_3099](https://github.com/rbstrauss98/sudoku_solver/assets/86329701/8cbaa734-e802-403d-b77c-94c65b43b4bf)
+<img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/8cbaa734-e802-403d-b77c-94c65b43b4bf" width=250 height=600>
 
