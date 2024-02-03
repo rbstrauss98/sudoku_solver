@@ -93,9 +93,12 @@ class Solver {
     return orderedDomain;
   }
 
-  Sudoku? backtrackingSearch(Sudoku puzzle) {
+  Sudoku? backtrackingSearch(Sudoku puzzle, DateTime startTime, int timeoutInSeconds) {
     if (puzzle.isSolved()) {
       return puzzle;
+    }
+    if (DateTime.now().difference(startTime).inSeconds > timeoutInSeconds) {
+      return null;
     }
     List<int> variable = selectVariable(puzzle);
     List<int> values = orderValues(puzzle, variable[0], variable[1]);
@@ -107,7 +110,7 @@ class Solver {
       if (!success) {
         continue;
       } else {
-        Sudoku? solvedPuzzle = backtrackingSearch(newPuzzle);
+        Sudoku? solvedPuzzle = backtrackingSearch(newPuzzle, startTime, timeoutInSeconds);
         if (solvedPuzzle != null) {
           return solvedPuzzle;
         } else {
@@ -124,7 +127,9 @@ class Solver {
     if (!validInput) {
       return const Tuple2<Sudoku?, String>(null, "This is an invalid Input. Please try again.");
     }
-    Sudoku? solvedPuzzle = backtrackingSearch(puzzle);
+    DateTime startTime = DateTime.now();
+    int timeoutInSeconds = 5;
+    Sudoku? solvedPuzzle = backtrackingSearch(puzzle, startTime, timeoutInSeconds);
     if (solvedPuzzle != null) {
       return Tuple2<Sudoku?, String>(solvedPuzzle, "Solved");
     }

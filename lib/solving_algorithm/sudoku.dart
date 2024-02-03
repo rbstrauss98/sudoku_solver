@@ -1,7 +1,22 @@
 import 'cell.dart';
 class Sudoku {
   List<List<Cell>> cells = List.generate(9, (i) => List.generate(9, (j) => Cell()));
+   Map<String, dynamic> toMap() {
+    return {
+      'cells': cells.map((row) => row.map((cell) => cell.toMap()).toList()).toList(),
+    };
+  }
 
+  // Add a method to create a Sudoku from a Map
+  static Sudoku fromMap(Map<String, dynamic> map) {
+    Sudoku sudoku = Sudoku();
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        sudoku.cells[i][j] = Cell.fromMap(map['cells'][i][j]);
+      }
+    }
+    return sudoku;
+  }
   void copyPuzzle(Sudoku other) {
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9;j++) {

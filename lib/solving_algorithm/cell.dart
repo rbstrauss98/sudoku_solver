@@ -2,6 +2,19 @@ class Cell{
   List<int> domain = List<int>.generate(9, (index) => index + 1);
   int? value;
 
+  Map<String, dynamic> toMap() {
+    return {
+      'value': value,
+      'domain': domain,
+    };
+  }
+  // Add a method to create a Cell from a Map
+  static Cell fromMap(Map<String, dynamic> map) {
+    Cell cell = Cell();
+    cell.value = map['value'];
+    cell.domain = List<int>.from(map['domain']);
+    return cell;
+  }
   void assignValue(int value) {
     domain = [value];
     this.value = value;
