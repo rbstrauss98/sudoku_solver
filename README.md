@@ -8,7 +8,10 @@ In an iteration of the backtracking search, a variable is selected using the Min
 
 <img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/af12fd16-be8a-4dac-9c0f-2d42a619a913" width=240 height=560>
 
+<img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/edea2e29-2f3e-4940-a7e7-76104a81dcef" width=240 height=560>
+
 <img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/1fb58f58-0387-40d6-9dc3-2d0dcc22a63a" width=240 height=560>
 
 <img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/8cbaa734-e802-403d-b77c-94c65b43b4bf" width=240 height=560>
 
+<img src="https://github.com/rbstrauss98/sudoku_solver/assets/86329701/81b2b014-8880-4de3-b5c2-ff3ba51c89ff" width=240 height=560>
